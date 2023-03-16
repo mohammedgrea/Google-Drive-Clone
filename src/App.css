@@ -1,0 +1,16 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+:root {
+  --mainDarkColor: #3d6ec9;
+  --mainColor: #4688f4;
+  --mainBgColor: #f2f6fc;
+  --secondaryBgColor: #9f9f9f;
+  --main-transition: 0.2s;
+}
