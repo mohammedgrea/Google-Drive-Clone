@@ -47,7 +47,7 @@ const DriveLogo = styled.div`
   font-size: 20px;
   margin-bottom: 8px;
   text-transform: capitalize;
-  color: #434343;
+  color: var(--mainTextColor);
   > img {
     width: 50px;
   }
@@ -117,5 +117,6 @@ const HaveAnAccount = styled.div`
   > a {
     font-weight: bold;
     text-transform: capitalize;
+    color: var(--mainColor);
   }
 `;

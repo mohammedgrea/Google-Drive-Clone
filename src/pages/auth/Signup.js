@@ -124,5 +124,6 @@ const HaveAnAccount = styled.div`
   > a {
     font-weight: bold;
     text-transform: capitalize;
+    color: var(--mainColor);
   }
 `;

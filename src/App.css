@@ -10,7 +10,18 @@
 :root {
   --mainDarkColor: #3d6ec9;
   --mainColor: #4688f4;
-  --mainBgColor: #f2f6fc;
-  --secondaryBgColor: #9f9f9f;
+  --mainBgColor: #f7f9fc;
+  --mainDarkBgColor: #edf2fc;
+  --lightsecondaryBgColor: #e8e8e8;
+  --secondaryBgColor: #cbcaca;
+  --activeBgColor: #c2e7ff;
+  --hoverBgColor: #d4dbea;
+  --mainIconColor: #434343;
+  --overlayColor: #4343433f;
+  --secondaryIconColor: #d4dbea;
+  --mainTextColor: #434343;
   --main-transition: 0.2s;
+}
+body {
+  position: relative;
 }

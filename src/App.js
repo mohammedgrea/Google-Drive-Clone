@@ -5,9 +5,14 @@ import Signup from "./pages/auth/Signup";
 
 import "./App.css";
 import Signin from "./pages/auth/Signin";
+import Dashboard from "./pages/app/Dashboard";
 
 function App() {
   const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Dashboard />,
+    },
     {
       path: "/signup",
       element: <Signup />,
@@ -18,17 +23,19 @@ function App() {
     },
   ]);
   return (
-    <div className="app">
-      <MainContaienr>
-        <RouterProvider router={router} />
-      </MainContaienr>
-    </div>
+    <MainContaienr>
+      <RouterProvider router={router} />
+    </MainContaienr>
   );
 }
 
 export default App;
 
 const MainContaienr = styled.div`
+  height: calc(100vh - 60px);
+  padding-inline: 20px;
+  background-color: var(--mainBgColor);
+
   /* margin-top: 100px;
   display: flex;
   justify-content: flex-end;
@@ -59,6 +66,5 @@ const MainContaienr = styled.div`
   } */
   a {
     text-decoration: none;
-    color: var(--mainColor);
   }
 `;
