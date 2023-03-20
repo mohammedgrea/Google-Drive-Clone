@@ -2,13 +2,13 @@ import React from "react";
 import styled from "styled-components/macro";
 import Breadcrumb from "./Breadcrumb";
 import { useSideBarContext } from "../../context/SidebarContext";
+import UserInfo from "./UserInfo";
 export default function Navigation() {
   const { isSidebarHided } = useSideBarContext();
-  console.log(isSidebarHided);
 
   return (
     <NavigationContainer isSidebarHided={isSidebarHided}>
-      <Breadcrumb></Breadcrumb>
+      <Breadcrumb />
     </NavigationContainer>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components/macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,7 +7,16 @@ import {
   faCircleXmark,
   faXRay,
 } from "@fortawesome/free-solid-svg-icons";
+import UserInfo from "./UserInfo";
+
 export default function Header() {
+  const [userInfoStatePanel, setUserInfoStatePanel] = useState(false);
+  const avatarRef = useRef();
+  function hideUserInfoPanel(e) {
+    if (!avatarRef.current.contains(e.target)) {
+      setUserInfoStatePanel(false);
+    }
+  }
   return (
     <HeaderContainer>
       <LeftHeader>
@@ -27,7 +36,15 @@ export default function Header() {
         </SearchContainer>
       </MiddleHeader>
       <RightHeader>
-        <AvatarIcon icon={faCircleUser} />
+        <AvatarIcon
+          ref={avatarRef}
+          icon={faCircleUser}
+          onClick={() => setUserInfoStatePanel(!userInfoStatePanel)}
+        />
+        <UserInfo
+          showUserInfoPanel={userInfoStatePanel}
+          hideUserInfoPanel={hideUserInfoPanel}
+        />
       </RightHeader>
     </HeaderContainer>
   );
@@ -41,6 +58,7 @@ const HeaderContainer = styled.div`
   padding: 0 20px 0 30px;
   position: fixed;
   top: 0;
+  z-index: 10;
   left: 0;
   background-color: var(--mainBgColor);
   box-sizing: border-box;
@@ -159,6 +177,7 @@ const RightHeader = styled.div`
   margin-left: auto;
 `;
 const AvatarIcon = styled(FontAwesomeIcon)`
+  cursor: pointer;
   font-size: 30px;
   @media (max-width: 768px) {
     font-size: 25px;

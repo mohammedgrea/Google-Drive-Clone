@@ -17,9 +17,11 @@
   --activeBgColor: #c2e7ff;
   --hoverBgColor: #d4dbea;
   --mainIconColor: #434343;
-  --overlayColor: #4343433f;
+  --overlayColor: #43434376;
   --secondaryIconColor: #d4dbea;
   --mainTextColor: #434343;
+  --secondaryTextColor: #686868;
+  --successColor: #4bb543;
   --main-transition: 0.2s;
 }
 body {

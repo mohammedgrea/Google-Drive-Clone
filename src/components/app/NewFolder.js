@@ -1,28 +1,30 @@
 import styled from "styled-components/macro";
 import { useEffect, useState, useRef } from "react";
-export default function NewFolder({ isAppeared, showModal }) {
-  const [state, setState] = useState(false);
+export default function NewFolder({
+  isCreateFolderAppeared,
+  showCreateFolderModal,
+}) {
+  const [stateFolder, setStateFolder] = useState(false);
   const inputRef = useRef();
 
   function hideModal(e) {
-    e.stopPropagation();
-    if (!e.target.contains(inputRef.current)) {
-      showModal(true);
+    if (!inputRef.current.contains(e.target)) {
+      showCreateFolderModal();
     }
   }
   useEffect(() => {
-    document.addEventListener("click", hideModal);
+    document.addEventListener("mousedown", hideModal);
   });
   useEffect(() => {
-    setState(isAppeared);
-  }, [isAppeared]);
+    setStateFolder(isCreateFolderAppeared);
+  }, [isCreateFolderAppeared]);
   return (
-    <NewFolderContainer state={state}>
+    <NewFolderContainer stateFolder={stateFolder}>
       <InputContainer ref={inputRef}>
         <FolderTitle>new folder</FolderTitle>
         <Input type="text" placeholder="Untitled folder" />
         <Btns>
-          <Cancel>cancel</Cancel>
+          <Cancel onClick={showCreateFolderModal}>cancel</Cancel>
           <FolderCreate>create</FolderCreate>
         </Btns>
       </InputContainer>
@@ -37,7 +39,7 @@ const NewFolderContainer = styled.div`
   left: 0px;
   top: 0px;
   background-color: var(--overlayColor);
-  display: ${(props) => (props.state ? "flex" : "none")};
+  display: ${(props) => (props.stateFolder ? "flex" : "none")};
   justify-content: center;
   align-items: center;
   z-index: 10000;

@@ -5,10 +5,17 @@ import Folder from "./Folder";
 import { useSideBarContext } from "../../context/SidebarContext";
 export default function Content() {
   const { isSidebarHided } = useSideBarContext();
-
+  const arr = [
+    { folderName: "mohammed", id: 1 },
+    { folderName: "new folder", id: 2 },
+    { folderName: "movies", id: 2 },
+  ];
+  const folders = arr.map((folder) => (
+    <Folder folderName={folder.folderName} key={folder.id} />
+  ));
   return (
     <ContentContainer isSidebarHided={isSidebarHided}>
-      <Folder />
+      <FoldersContainer>{folders}</FoldersContainer>
       <File />
     </ContentContainer>
   );
@@ -25,5 +32,20 @@ const ContentContainer = styled.div`
   @media (max-width: 992px) {
     width: 100%;
     margin-left: 0;
+  }
+`;
+const FoldersContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin-bottom: 32px;
+  @media (max-width: 1600px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  @media (max-width: 992px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
   }
 `;

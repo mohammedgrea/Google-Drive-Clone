@@ -3,26 +3,25 @@ import styled from "styled-components/macro";
 
 import AddFolderButton from "./AddFolderButton";
 
-export default function AddModel({ isAppeared, showModal, buttonRef }) {
+export default function AddModel({ stateModal, showModal }) {
   const [state, setState] = useState(false);
   const modalRef = useRef();
   function hideModal(e) {
-    e.stopPropagation();
-    if (!e.target.contains(modalRef.current) && !e.target.contains(buttonRef)) {
+    if (!modalRef.current.contains(e.target)) {
       showModal();
     }
   }
   useEffect(() => {
-    document.addEventListener("click", hideModal);
+    document.addEventListener("mousedown", hideModal);
   });
   useEffect(() => {
-    setState(isAppeared);
-  }, [isAppeared]);
+    setState(stateModal);
+  }, [stateModal]);
   return (
     <ModalContainer state={state} ref={modalRef}>
-      {/* <AddFolderButton /> */}
+      <AddFolderButton />
       <hr />
-      {/* <AddFolderButton /> */}
+      <AddFolderButton />
     </ModalContainer>
   );
 }
@@ -41,14 +40,4 @@ const ModalContainer = styled.div`
   > hr {
     border: 1px solid var(--lightsecondaryBgColor);
   }
-`;
-
-const CancelButton = styled.button`
-  margin: 20px 15px;
-  cursor: pointer;
-  position: absolute;
-  right: 0;
-  top: -10px;
-  border: none;
-  background-color: transparent;
 `;

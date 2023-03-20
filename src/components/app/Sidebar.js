@@ -15,37 +15,25 @@ import {
 import { faDesktop } from "@fortawesome/free-solid-svg-icons";
 import SliderOption from "./SliderOption";
 import AddModel from "./AddModal";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useSideBarContext } from "../../context/SidebarContext";
 export default function SideBar() {
   const { isSidebarHided, showOrhideSidebar } = useSideBarContext();
-
-  const [isAppeared, setIsAppeard] = useState(false);
-  const [state, setState] = useState(false);
-  const buttonRef = useRef();
-
-  useEffect(() => {
-    setIsAppeard(state);
-  }, [state]);
-
-  function showModal() {
-    setState(!state);
+  const [stateModal, setModalState] = useState(false);
+  function hideModal() {
+    setModalState(false);
   }
-  console.log("render");
+
   return (
     <SideBarContainer isSidebarHided={isSidebarHided}>
-      <AddButton onClick={showModal} ref={buttonRef}>
+      <AddButton onClick={() => setModalState(true)}>
         <PlusIcon icon={faPlus} />
         <span>new</span>
       </AddButton>
       <ToggelButton onClick={showOrhideSidebar}>
         <ToggelButtonIcon icon={isSidebarHided ? faGreaterThan : faLessThan} />
       </ToggelButton>
-      {/* <AddModel
-        isAppeared={isAppeared}
-        showModal={showModal}
-        buttonRef={buttonRef.current}
-      /> */}
+      <AddModel stateModal={stateModal} showModal={hideModal} />
       <SliderOption icon={faSquareCheck} option="priority" />
       <SliderOption icon={faHardDrive} option="my drive" />
       <SliderOption icon={faDesktop} option="computer" />
@@ -101,7 +89,7 @@ const PlusIcon = styled(FontAwesomeIcon)`
   color: var(--mainIconColor);
 `;
 const ToggelButtonIcon = styled(FontAwesomeIcon)`
-  font-size: 18px;
+  font-size: 14px;
   color: var(--mainIconColor);
 `;
 

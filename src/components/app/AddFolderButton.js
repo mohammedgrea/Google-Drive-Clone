@@ -1,28 +1,26 @@
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useState } from "react";
 import styled from "styled-components/macro";
 import { faFolderPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NewFolder from "./NewFolder";
 
 function AddFolderButton() {
-  const [isAppeared, setIsAppeard] = useState(false);
-  const [state, setState] = useState(false);
+  const [Folderstate, setFolderState] = useState(false);
 
-  useEffect(() => {
-    setIsAppeard(state);
-  }, [state]);
-
-  function showModal() {
-    setState(!state);
+  function showCreateFolderModal() {
+    setFolderState(false);
   }
   return (
     <AddFolderContainer>
-      <AddButton onClick={showModal}>
+      <AddButton onClick={() => setFolderState(true)}>
         <Icon icon={faFolderPlus} />
         <span>Create folder</span>
       </AddButton>
 
-      {/* <NewFolder isAppeared={isAppeared} showModal={showModal} /> */}
+      <NewFolder
+        isCreateFolderAppeared={Folderstate}
+        showCreateFolderModal={showCreateFolderModal}
+      />
     </AddFolderContainer>
   );
 }
@@ -46,9 +44,11 @@ const AddButton = styled.button`
   }
   > span {
     margin-left: 10px;
+    pointer-events: none;
   }
 `;
 const Icon = styled(FontAwesomeIcon)`
   font-size: 20px;
   color: var(--mainIconColor);
+  pointer-events: none;
 `;

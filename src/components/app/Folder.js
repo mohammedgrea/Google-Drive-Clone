@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import styled from "styled-components";
 
-export default function Folder() {
+export default function Folder({ folderName }) {
   const [isChecked, setIsChecked] = useState(false);
   function checkAction(e) {
     e.stopPropagation();
@@ -11,7 +11,7 @@ export default function Folder() {
   }
 
   return (
-    <FoldersContainer>
+    <>
       <FolderContainer onClick={() => setIsChecked(true)} state={isChecked}>
         <CheckBoxContainer>
           <CheckBox
@@ -21,126 +21,11 @@ export default function Folder() {
           />
         </CheckBoxContainer>
         <MediaIcon icon={faFolder} />
-        <Title>Google Draive</Title>
+        <Title>{folderName}</Title>
       </FolderContainer>
-      <FolderContainer onClick={() => setIsChecked(true)} state={isChecked}>
-        <CheckBoxContainer>
-          <CheckBox
-            type="checkbox"
-            checked={isChecked}
-            onChange={checkAction}
-          />
-        </CheckBoxContainer>
-        <MediaIcon icon={faFolder} />
-        <Title>Google Draive</Title>
-      </FolderContainer>
-      <FolderContainer onClick={() => setIsChecked(true)} state={isChecked}>
-        <CheckBoxContainer>
-          <CheckBox
-            type="checkbox"
-            checked={isChecked}
-            onChange={checkAction}
-          />
-        </CheckBoxContainer>
-        <MediaIcon icon={faFolder} />
-        <Title>Google Draive</Title>
-      </FolderContainer>
-      <FolderContainer onClick={() => setIsChecked(true)} state={isChecked}>
-        <CheckBoxContainer>
-          <CheckBox
-            type="checkbox"
-            checked={isChecked}
-            onChange={checkAction}
-          />
-        </CheckBoxContainer>
-        <MediaIcon icon={faFolder} />
-        <Title>Google Draive</Title>
-      </FolderContainer>
-      <FolderContainer onClick={() => setIsChecked(true)} state={isChecked}>
-        <CheckBoxContainer>
-          <CheckBox
-            type="checkbox"
-            checked={isChecked}
-            onChange={checkAction}
-          />
-        </CheckBoxContainer>
-        <MediaIcon icon={faFolder} />
-        <Title>Google Draive</Title>
-      </FolderContainer>
-      <FolderContainer onClick={() => setIsChecked(true)} state={isChecked}>
-        <CheckBoxContainer>
-          <CheckBox
-            type="checkbox"
-            checked={isChecked}
-            onChange={checkAction}
-          />
-        </CheckBoxContainer>
-        <MediaIcon icon={faFolder} />
-        <Title>Google Draive</Title>
-      </FolderContainer>
-      <FolderContainer onClick={() => setIsChecked(true)} state={isChecked}>
-        <CheckBoxContainer>
-          <CheckBox
-            type="checkbox"
-            checked={isChecked}
-            onChange={checkAction}
-          />
-        </CheckBoxContainer>
-        <MediaIcon icon={faFolder} />
-        <Title>Google Draive</Title>
-      </FolderContainer>
-      <FolderContainer onClick={() => setIsChecked(true)} state={isChecked}>
-        <CheckBoxContainer>
-          <CheckBox
-            type="checkbox"
-            checked={isChecked}
-            onChange={checkAction}
-          />
-        </CheckBoxContainer>
-        <MediaIcon icon={faFolder} />
-        <Title>Google Draive</Title>
-      </FolderContainer>
-      <FolderContainer onClick={() => setIsChecked(true)} state={isChecked}>
-        <CheckBoxContainer>
-          <CheckBox
-            type="checkbox"
-            checked={isChecked}
-            onChange={checkAction}
-          />
-        </CheckBoxContainer>
-        <MediaIcon icon={faFolder} />
-        <Title>Google Draive</Title>
-      </FolderContainer>
-      <FolderContainer onClick={() => setIsChecked(true)} state={isChecked}>
-        <CheckBoxContainer>
-          <CheckBox
-            type="checkbox"
-            checked={isChecked}
-            onChange={checkAction}
-          />
-        </CheckBoxContainer>
-        <MediaIcon icon={faFolder} />
-        <Title>Google Draive</Title>
-      </FolderContainer>
-    </FoldersContainer>
+    </>
   );
 }
-
-const FoldersContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 10px;
-  margin-bottom: 32px;
-  @media (max-width: 1600px) {
-    grid-template-columns: repeat(5, 1fr);
-  }
-  @media (max-width: 992px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-`;
 
 const CheckBoxContainer = styled.div`
   display: flex;
