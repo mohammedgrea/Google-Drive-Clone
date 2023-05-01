@@ -1,14 +1,23 @@
 import styled from "styled-components/macro";
 import { useEffect, useState, useRef } from "react";
+import { addDoc } from "firebase/firestore";
+import { collRef } from "../../firebase";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import useFolder, { ROOT_FOLDER } from "../../hooks/useFolder";
 export default function NewFolder({
   isCreateFolderAppeared,
   showCreateFolderModal,
 }) {
+  const { folderId } = useParams();
+  const { folder } = useFolder(folderId);
+  const currentUser = useSelector((state) => state.auth.currentUser);
   const [stateFolder, setStateFolder] = useState(false);
+  const [folderName, setFolderName] = useState("");
   const inputRef = useRef();
 
   function hideModal(e) {
-    if (!inputRef.current.contains(e.target)) {
+    if (!inputRef.current?.contains(e.target)) {
       showCreateFolderModal();
     }
   }
@@ -18,14 +27,39 @@ export default function NewFolder({
   useEffect(() => {
     setStateFolder(isCreateFolderAppeared);
   }, [isCreateFolderAppeared]);
+
+  //Add New Folder
+  if (folder === null) return;
+  let path = [...folder?.path];
+  if (folder !== ROOT_FOLDER) {
+    path.push({ pathId: folder?.id, folderName: folder?.folderName });
+  }
+  function AddNewFolder(e) {
+    e.preventDefault();
+    addDoc(collRef, {
+      folderName: folderName,
+      userId: currentUser.uid,
+      parentId: folder?.id,
+      path: path,
+    });
+    setFolderName("");
+    showCreateFolderModal();
+  }
   return (
     <NewFolderContainer stateFolder={stateFolder}>
-      <InputContainer ref={inputRef}>
+      <InputContainer onSubmit={AddNewFolder} ref={inputRef}>
         <FolderTitle>new folder</FolderTitle>
-        <Input type="text" placeholder="Untitled folder" />
+        <Input
+          type="txt"
+          value={folderName}
+          placeholder="Untitled folder"
+          onChange={({ target }) => setFolderName(target.value)}
+        />
         <Btns>
-          <Cancel onClick={showCreateFolderModal}>cancel</Cancel>
-          <FolderCreate>create</FolderCreate>
+          <Cancel type="button" onClick={showCreateFolderModal}>
+            cancel
+          </Cancel>
+          <FolderCreate type="submit">create</FolderCreate>
         </Btns>
       </InputContainer>
     </NewFolderContainer>
@@ -42,9 +76,9 @@ const NewFolderContainer = styled.div`
   display: ${(props) => (props.stateFolder ? "flex" : "none")};
   justify-content: center;
   align-items: center;
-  z-index: 10000;
+  z-index: 1000;
 `;
-const InputContainer = styled.div`
+const InputContainer = styled.form`
   padding: 20px;
   background-color: white;
   border-radius: 8px;

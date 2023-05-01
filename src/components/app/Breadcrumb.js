@@ -3,16 +3,37 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
+import useFolder, { ROOT_FOLDER } from "../../hooks/useFolder";
 
 export default function Breadcrumb() {
-  const nav = ["My Drive", "new folder", "New folder"];
-  const items = nav?.map((item) => (
-    <Items>
-      <Link>{item}</Link>
+  const { folderId } = useParams();
+  const { folder } = useFolder(folderId);
+  let path = folder === ROOT_FOLDER ? [] : [ROOT_FOLDER];
+  if (folder) {
+    path = [...path, ...folder.path];
+  }
+  const items = path.map((p, index) => (
+    <Items key={p.pathId}>
+      <Link
+        to={{
+          pathname: p.pathId ? `/folder/${p.pathId}` : "/",
+          state: { p: { ...p, path: path.slice(1, index) } },
+        }}
+      >
+        {p.folderName}
+      </Link>
       <GreaterThanIcon icon={faGreaterThan} />
     </Items>
   ));
-  return <BreadcrumbContainer>{items}</BreadcrumbContainer>;
+  return (
+    folder && (
+      <BreadcrumbContainer>
+        {items}
+        {folder && <Items>{folder.folderName} </Items>}
+      </BreadcrumbContainer>
+    )
+  );
 }
 
 const GreaterThanIcon = styled(FontAwesomeIcon)`
@@ -31,9 +52,6 @@ const BreadcrumbContainer = styled.div`
   @media (max-width: 992px) {
     gap: 5px;
   }
-  > div:last-child a {
-    color: var(--mainColor);
-  }
   > div:last-child ${GreaterThanIcon} {
     display: none;
   }
@@ -42,6 +60,7 @@ const Items = styled.div`
   font-size: 22px;
   display: flex;
   align-items: center;
+  font-weight: 500;
   gap: 10px;
   @media (max-width: 992px) {
     letter-spacing: 1px;

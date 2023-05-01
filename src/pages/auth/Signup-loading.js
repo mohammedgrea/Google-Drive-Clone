@@ -1,71 +1,63 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import styled from "styled-components/macro";
 import AuthContainer from "../../components/auth/AuthContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { logup } from "../../store/authSlice";
-import validation from "../../helpers/validation";
-
+import { MoonLoader } from "react-spinners";
 export default function Signup() {
   const currentUser = useSelector((state) => state.auth.currentUser);
-  const [errors, setErros] = useState({});
+  const [loading, setLoading] = useState(false);
+  const load = JSON.parse(localStorage.getItem("loading"));
   const dispatch = useDispatch();
   const emailRef = useRef();
-  // const usernameRef = useRef();
+  const usernameRef = useRef();
   const passwordRef = useRef();
-  const ConfirmpasswordRef = useRef();
-
   function handelSubmit(e) {
     e.preventDefault();
-    setErros(
-      validation(
-        emailRef.current.value,
-        passwordRef.current.value,
-        ConfirmpasswordRef.current.value
-      )
+    dispatch(
+      logup({
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+      })
     );
-    if (passwordRef.current.value === ConfirmpasswordRef.current.value) {
-      console.log(passwordRef.current.value, ConfirmpasswordRef.current.value);
-      dispatch(
-        logup({
-          email: emailRef.current.value,
-          password: passwordRef.current.value,
-        })
-      );
-    }
+    setLoading(true);
   }
-
+  useEffect(() => {
+    if (loading) localStorage.setItem("loading", JSON.stringify("logged"));
+  }, [loading]);
   return (
     <AuthContainer>
-      <SignContainer onSubmit={handelSubmit}>
-        <DriveLogo>
-          <img src="/images/google-drive-logo.png" alt="google drive" />
-          <span>google drive</span>
-        </DriveLogo>
-        {/* <InputContainer>
-          <Input type="txt" ref={usernameRef} required />
-          <Label>user name</Label>
-        </InputContainer> */}
-        <InputContainer>
-          <Input type="emial" ref={emailRef} required />
-          {errors.email && <p>{errors.email}</p>}
-          <Label>adress email</Label>
-        </InputContainer>
-        <InputContainer>
-          <Input type="password" ref={passwordRef} required />
-          {errors.password && <p>{errors.password}</p>}
-          <Label>enter your password</Label>
-        </InputContainer>
-        <InputContainer>
-          <Input type="password" ref={ConfirmpasswordRef} required />
-          {errors.confiPassword && <p> {errors.confiPassword}</p>}
-          <Label>confirm your password</Label>
-        </InputContainer>
-        <Button type="submit">Create an account</Button>
-        <HaveAnAccount>
-          Have an account ? <Link to="/signin">sign in</Link>
-        </HaveAnAccount>
-      </SignContainer>
+      {loading || load === "logged" ? (
+        <MoonLoader color="#4688f4" />
+      ) : (
+        <SignContainer onSubmit={handelSubmit}>
+          <DriveLogo>
+            <img src="/images/google-drive-logo.png" alt="google drive" />
+            <span>google drive</span>
+          </DriveLogo>
+          <InputContainer>
+            <Input type="txt" ref={usernameRef} required />
+            <Label>user name</Label>
+          </InputContainer>
+          <InputContainer>
+            <Input type="emial" ref={emailRef} required />
+            <Label>adress email</Label>
+          </InputContainer>
+          <InputContainer>
+            <Input type="password" ref={passwordRef} required />
+            <Label>enter your password</Label>
+          </InputContainer>
+          <InputContainer>
+            <Input type="password" ref={passwordRef} required />
+            <Label>confirm your password</Label>
+          </InputContainer>
+          <Button type="submit">Create an account</Button>
+          <HaveAnAccount>
+            Have an account ? <Link to="/signin">sign in</Link>
+          </HaveAnAccount>
+        </SignContainer>
+      )}
 
       {currentUser && <Navigate to="/" />}
     </AuthContainer>
@@ -111,12 +103,6 @@ const Label = styled.label`
 `;
 const InputContainer = styled.div`
   position: relative;
-  > p {
-    margin-left: 10px;
-    color: red;
-    font-size: 12px;
-    margin-top: 5px;
-  }
 `;
 
 const Input = styled.input`

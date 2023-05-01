@@ -5,6 +5,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
 
 :root {
@@ -17,13 +18,10 @@
   --activeBgColor: #c2e7ff;
   --hoverBgColor: #d4dbea;
   --mainIconColor: #434343;
-  --overlayColor: #43434376;
+  --overlayColor: #000000ef;
   --secondaryIconColor: #d4dbea;
   --mainTextColor: #434343;
   --secondaryTextColor: #686868;
   --successColor: #4bb543;
   --main-transition: 0.2s;
-}
-body {
-  position: relative;
 }

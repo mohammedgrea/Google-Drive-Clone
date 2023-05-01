@@ -2,21 +2,55 @@ import {
   faCircleCheck,
   faClose,
   faImage,
+  faFileLines,
+  faFilm,
+  faFilePdf,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { showTaost } from "../../store/progressSlice";
 
-export default function ProgressToast() {
-  const [test, setTest] = useState(90);
+export default function ProgressToast({ progress }) {
   const [complet, setComplet] = useState(0);
+  const dispatch = useDispatch();
+  const showProgrssTaost = useSelector((state) => state.progress.showTaost);
+  const fileInfo = useSelector((state) => state.progress.fileInfo);
   useEffect(() => {
-    setComplet(test);
-  }, [test]);
+    setComplet(progress);
+  }, [progress]);
 
+  function hideProgressToast() {
+    dispatch(showTaost(false));
+  }
+
+  let format = "";
+  if (
+    fileInfo.includes(".png") ||
+    fileInfo.includes(".jpeg") ||
+    fileInfo.includes(".svg")
+  ) {
+    format = <MediaIcon icon={faImage} />;
+  } else if (
+    fileInfo.includes(".mp4") ||
+    fileInfo.includes(".avi") ||
+    fileInfo.includes(".mkv") ||
+    fileInfo.includes(".mov") ||
+    fileInfo.includes(".webm") ||
+    fileInfo.includes(".ogg") ||
+    fileInfo.includes(".mp4")
+  ) {
+    format = <MediaIcon icon={faFilm} />;
+  } else if (fileInfo.includes(".pdf")) {
+    format = <MediaIcon icon={faFilePdf} />;
+  } else {
+    format = (
+      <MediaIcon icon={faFileLines} style={{ color: "var(--mainColor)" }} />
+    );
+  }
   return (
-    <ProgressToastContainer>
-      {/* <button onClick={() => setTest(test + 1)}>Increase</button> */}
+    <ProgressToastContainer showProgrssTaost={showProgrssTaost}>
       <HeaderProgressToast>
         {complet >= 100 ? (
           <HeaderLeftProgressToast>upload complete</HeaderLeftProgressToast>
@@ -24,7 +58,7 @@ export default function ProgressToast() {
           <HeaderLeftProgressToast>Uploading item</HeaderLeftProgressToast>
         )}
         <HeaderRightProgressToast>
-          <CancelIcon icon={faClose} />
+          <CancelIcon icon={faClose} onClick={hideProgressToast} />
         </HeaderRightProgressToast>
       </HeaderProgressToast>
       <BodyProgressToast>
@@ -36,13 +70,13 @@ export default function ProgressToast() {
         )}
         <ProgressContainer>
           <FileInfo>
-            <MediaIcon icon={faImage} />
-            <Title>Google Drive</Title>
+            {format}
+            <Title>{fileInfo}</Title>
           </FileInfo>
           {complet >= 100 ? (
             <SuccessUploadIcon icon={faCircleCheck} />
           ) : (
-            <ProgressCircle progress={test}></ProgressCircle>
+            <ProgressCircle prog={progress}></ProgressCircle>
           )}
         </ProgressContainer>
       </BodyProgressToast>
@@ -53,13 +87,16 @@ export default function ProgressToast() {
 const ProgressToastContainer = styled.div`
   background-color: white;
   border-color: var(--mainColor) var(--mainColor) transparent var(--mainColor);
-  border-width: 2px;
+  border-width: 3px;
   border-style: solid;
   width: 350px;
   position: fixed;
-  right: 0;
-  bottom: 0;
+  left: 50%;
+  bottom: -5px;
   border-radius: 16px 16px 0 0;
+  transform: ${(props) =>
+    props.showProgrssTaost ? "translate(-50%,0%)" : "translate(-50%,150%)"};
+  transition: 0.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
 `;
 const HeaderProgressToast = styled.div`
   border-radius: 16px 16px 0 0;
@@ -129,8 +166,8 @@ const ProgressCircle = styled.div`
   width: 20px;
   background-color: var(--mainColor);
   background: ${(props) => `conic-gradient(
-    var(--mainColor) ${props.progress * 3.6}deg,
-    var(--secondaryBgColor) ${props.progress * 3.6}deg
+    var(--mainColor) ${props.prog * 3.6}deg,
+    var(--secondaryBgColor) ${props.prog * 3.6}deg
   )`};
   border-radius: 50%;
   position: relative;

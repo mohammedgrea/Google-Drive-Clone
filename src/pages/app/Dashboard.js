@@ -1,20 +1,27 @@
 import Content from "../../components/app/Content";
 import Header from "../../components/app/Header";
 import Navigation from "../../components/app/Navigation";
-import ProgressToast from "../../components/app/ProgressToast";
 import Sidebar from "../../components/app/Sidebar";
-import SidebarContext from "../../context/SidebarContext";
+import styled from "styled-components/macro";
 
 export default function Dashboard() {
   return (
-    <>
+    <MainContaienr>
       <Header />
-      <SidebarContext>
-        <Navigation />
-        <Sidebar />
-        <Content />
-      </SidebarContext>
-      <ProgressToast />
-    </>
+      <Navigation />
+      <Sidebar />
+      <Content />
+    </MainContaienr>
   );
 }
+
+const MainContaienr = styled.div`
+  padding-inline: 20px;
+  margin-bottom: 50px;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  a {
+    text-decoration: none;
+  }
+`;

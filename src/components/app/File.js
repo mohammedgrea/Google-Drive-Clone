@@ -1,226 +1,114 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImage } from "@fortawesome/free-solid-svg-icons";
+import {
+  faImage,
+  faFileLines,
+  faFilm,
+  faFilePdf,
+} from "@fortawesome/free-solid-svg-icons";
+import { addfiles, removeFiles } from "../../store/selectSlice";
+import { useDispatch } from "react-redux";
+import View from "./View";
 
-export default function File() {
+export default function File({ childrenFiles }) {
   const [isChecked, setIsChecked] = useState(false);
+  const [showViewFile, setShowViewFile] = useState(false);
+  const dispatch = useDispatch();
   function checkAction(e) {
     e.stopPropagation();
     setIsChecked(!isChecked);
   }
+
+  const extention = childrenFiles.name.split(".")[1];
+  let format = "";
+  let file = "";
+  if (
+    childrenFiles.name.includes(".png") ||
+    childrenFiles.name.includes(".jpeg") ||
+    childrenFiles.name.includes(".jpg") ||
+    childrenFiles.name.includes(".svg")
+  ) {
+    format = <MediaIcon icon={faImage} />;
+    file = (
+      <img
+        src={childrenFiles.url}
+        alt={childrenFiles.name}
+        extention={extention}
+      />
+    );
+  } else if (
+    childrenFiles.name.includes(".mp4") ||
+    childrenFiles.name.includes(".avi") ||
+    childrenFiles.name.includes(".mkv") ||
+    childrenFiles.name.includes(".mov") ||
+    childrenFiles.name.includes(".webm") ||
+    childrenFiles.name.includes(".ogg") ||
+    childrenFiles.name.includes(".mp4")
+  ) {
+    format = <MediaIcon icon={faFilm} />;
+    file = (
+      <video
+        src={childrenFiles.url}
+        alt={childrenFiles.name}
+        extention={extention}
+      />
+    );
+  } else if (childrenFiles.name.includes(".pdf")) {
+    format = <MediaIcon icon={faFilePdf} />;
+    file = (
+      <iframe
+        src={`${childrenFiles.url}&embedded=true`}
+        alt={childrenFiles.name}
+        extention={extention}
+      ></iframe>
+    );
+  } else {
+    format = (
+      <MediaIcon icon={faFileLines} style={{ color: "var(--mainColor)" }} />
+    );
+    file = (
+      <iframe
+        src={`${childrenFiles.url}&embedded=true`}
+        alt={childrenFiles.name}
+        extention={extention}
+      ></iframe>
+    );
+  }
+
+  useEffect(() => {
+    if (isChecked) {
+      dispatch(addfiles(childrenFiles));
+    } else {
+      dispatch(removeFiles(childrenFiles));
+    }
+  }, [isChecked]);
+  function handelDubleClick() {
+    setShowViewFile(true);
+  }
+  function hideView() {
+    setShowViewFile(false);
+  }
   return (
-    <FileContainer>
-      <Files onClick={() => setIsChecked(true)} state={isChecked}>
-        <FileHeader>
-          <CheckBoxContainer>
-            <CheckBox
-              type="checkbox"
-              checked={isChecked}
-              onChange={checkAction}
-            />
-          </CheckBoxContainer>
-          <MediaIcon icon={faImage} />
-          <Title>Google Draive</Title>
-        </FileHeader>
-        <ImageContainer>
-          <img src="/images/image.jpeg" alt="google drive" />
-        </ImageContainer>
-      </Files>
-      <Files onClick={() => setIsChecked(true)} state={isChecked}>
-        <FileHeader>
-          <CheckBoxContainer>
-            <CheckBox
-              type="checkbox"
-              checked={isChecked}
-              onChange={checkAction}
-            />
-          </CheckBoxContainer>
-          <MediaIcon icon={faImage} />
-          <Title>Google Draive</Title>
-        </FileHeader>
-        <ImageContainer>
-          <img src="/images/image.jpeg" alt="google drive" />
-        </ImageContainer>
-      </Files>
-      <Files onClick={() => setIsChecked(true)} state={isChecked}>
-        <FileHeader>
-          <CheckBoxContainer>
-            <CheckBox
-              type="checkbox"
-              checked={isChecked}
-              onChange={checkAction}
-            />
-          </CheckBoxContainer>
-          <MediaIcon icon={faImage} />
-          <Title>Google Draive</Title>
-        </FileHeader>
-        <ImageContainer>
-          <img src="/images/image.jpeg" alt="google drive" />
-        </ImageContainer>
-      </Files>
-      <Files onClick={() => setIsChecked(true)} state={isChecked}>
-        <FileHeader>
-          <CheckBoxContainer>
-            <CheckBox
-              type="checkbox"
-              checked={isChecked}
-              onChange={checkAction}
-            />
-          </CheckBoxContainer>
-          <MediaIcon icon={faImage} />
-          <Title>Google Draive</Title>
-        </FileHeader>
-        <ImageContainer>
-          <img src="/images/image.jpeg" alt="google drive" />
-        </ImageContainer>
-      </Files>
-      <Files onClick={() => setIsChecked(true)} state={isChecked}>
-        <FileHeader>
-          <CheckBoxContainer>
-            <CheckBox
-              type="checkbox"
-              checked={isChecked}
-              onChange={checkAction}
-            />
-          </CheckBoxContainer>
-          <MediaIcon icon={faImage} />
-          <Title>Google Draive</Title>
-        </FileHeader>
-        <ImageContainer>
-          <img src="/images/image.jpeg" alt="google drive" />
-        </ImageContainer>
-      </Files>
-      <Files onClick={() => setIsChecked(true)} state={isChecked}>
-        <FileHeader>
-          <CheckBoxContainer>
-            <CheckBox
-              type="checkbox"
-              checked={isChecked}
-              onChange={checkAction}
-            />
-          </CheckBoxContainer>
-          <MediaIcon icon={faImage} />
-          <Title>Google Draive</Title>
-        </FileHeader>
-        <ImageContainer>
-          <img src="/images/image.jpeg" alt="google drive" />
-        </ImageContainer>
-      </Files>
-      <Files onClick={() => setIsChecked(true)} state={isChecked}>
-        <FileHeader>
-          <CheckBoxContainer>
-            <CheckBox
-              type="checkbox"
-              checked={isChecked}
-              onChange={checkAction}
-            />
-          </CheckBoxContainer>
-          <MediaIcon icon={faImage} />
-          <Title>Google Draive</Title>
-        </FileHeader>
-        <ImageContainer>
-          <img src="/images/image.jpeg" alt="google drive" />
-        </ImageContainer>
-      </Files>
-      <Files onClick={() => setIsChecked(true)} state={isChecked}>
-        <FileHeader>
-          <CheckBoxContainer>
-            <CheckBox
-              type="checkbox"
-              checked={isChecked}
-              onChange={checkAction}
-            />
-          </CheckBoxContainer>
-          <MediaIcon icon={faImage} />
-          <Title>Google Draive</Title>
-        </FileHeader>
-        <ImageContainer>
-          <img src="/images/image.jpeg" alt="google drive" />
-        </ImageContainer>
-      </Files>
-      <Files onClick={() => setIsChecked(true)} state={isChecked}>
-        <FileHeader>
-          <CheckBoxContainer>
-            <CheckBox
-              type="checkbox"
-              checked={isChecked}
-              onChange={checkAction}
-            />
-          </CheckBoxContainer>
-          <MediaIcon icon={faImage} />
-          <Title>Google Draive</Title>
-        </FileHeader>
-        <ImageContainer>
-          <img src="/images/image.jpeg" alt="google drive" />
-        </ImageContainer>
-      </Files>
-      <Files onClick={() => setIsChecked(true)} state={isChecked}>
-        <FileHeader>
-          <CheckBoxContainer>
-            <CheckBox
-              type="checkbox"
-              checked={isChecked}
-              onChange={checkAction}
-            />
-          </CheckBoxContainer>
-          <MediaIcon icon={faImage} />
-          <Title>Google Draive</Title>
-        </FileHeader>
-        <ImageContainer>
-          <img src="/images/image.jpeg" alt="google drive" />
-        </ImageContainer>
-      </Files>
-      <Files onClick={() => setIsChecked(true)} state={isChecked}>
-        <FileHeader>
-          <CheckBoxContainer>
-            <CheckBox
-              type="checkbox"
-              checked={isChecked}
-              onChange={checkAction}
-            />
-          </CheckBoxContainer>
-          <MediaIcon icon={faImage} />
-          <Title>Google Draive</Title>
-        </FileHeader>
-        <ImageContainer>
-          <img src="/images/image.jpeg" alt="google drive" />
-        </ImageContainer>
-      </Files>
-      <Files onClick={() => setIsChecked(true)} state={isChecked}>
-        <FileHeader>
-          <CheckBoxContainer>
-            <CheckBox
-              type="checkbox"
-              checked={isChecked}
-              onChange={checkAction}
-            />
-          </CheckBoxContainer>
-          <MediaIcon icon={faImage} />
-          <Title>Google Draive</Title>
-        </FileHeader>
-        <ImageContainer>
-          <img src="/images/image.jpeg" alt="google drive" />
-        </ImageContainer>
-      </Files>
-    </FileContainer>
+    <Files state={isChecked} onClick={handelDubleClick}>
+      <FileHeader>
+        <CheckBoxContainer>
+          <CheckBox type="checkbox" checked={isChecked} onClick={checkAction} />
+        </CheckBoxContainer>
+        <>{format}</>
+        <Title>
+          {childrenFiles.name.length > 15
+            ? childrenFiles.name.substring(0, 15) + "..."
+            : childrenFiles.name}
+        </Title>
+      </FileHeader>
+      <ImageContainer>{file}</ImageContainer>
+      {childrenFiles && (
+        <View file={childrenFiles} show={showViewFile} hideView={hideView} />
+      )}
+    </Files>
   );
 }
-
-const FileContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 10px;
-  @media (max-width: 1600px) {
-    grid-template-columns: repeat(5, 1fr);
-  }
-  @media (max-width: 992px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(1, 1fr);
-  }
-`;
 
 const MediaIcon = styled(FontAwesomeIcon)`
   color: red;
@@ -265,6 +153,7 @@ const Files = styled.div`
     background-color: ${(props) =>
       props.state ? " var(--activeBgColor)" : "var(--hoverBgColor)"};
   }
+
   &:hover ${CheckBoxContainer} {
     display: flex;
   }
@@ -274,16 +163,16 @@ const Files = styled.div`
 `;
 const FileHeader = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 5px;
   align-items: center;
-  padding-left: 10px;
   height: 20%;
 `;
 
 const Title = styled.div`
   font-weight: lighter;
   color: var(--mainTextColor);
-  font-size: 16px;
+  font-size: 12px;
+  pointer-events: none;
 `;
 
 const ImageContainer = styled.div`
@@ -291,10 +180,19 @@ const ImageContainer = styled.div`
   height: 80%;
   background-color: white;
   border-radius: 8px;
-  > img {
+  overflow: hidden;
+  > img,
+  iframe,
+  video {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 8px;
+    pointer-events: none;
+  }
+  > iframe {
+    width: 106%;
+    height: 100%;
+    pointer-events: none;
   }
 `;

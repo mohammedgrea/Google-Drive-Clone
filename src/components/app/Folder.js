@@ -1,29 +1,48 @@
 import { faFolder } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
-export default function Folder({ folderName }) {
+import { addFolders, removeFolders, resetState } from "../../store/selectSlice";
+import { useDispatch } from "react-redux";
+export default function Folder({ childernFolder }) {
   const [isChecked, setIsChecked] = useState(false);
+  const dispatch = useDispatch();
+  const folderRef = useRef();
+  const navigate = useNavigate();
   function checkAction(e) {
     e.stopPropagation();
     setIsChecked(!isChecked);
   }
 
+  useEffect(() => {
+    if (isChecked) {
+      dispatch(addFolders(childernFolder));
+    } else {
+      dispatch(removeFolders(childernFolder));
+    }
+  }, [isChecked, childernFolder]);
+  function handelDubleClick() {
+    navigate(`/folder/${childernFolder.id}`);
+    dispatch(resetState({ count: 0, emptyArray: [] }));
+  }
   return (
-    <>
-      <FolderContainer onClick={() => setIsChecked(true)} state={isChecked}>
-        <CheckBoxContainer>
-          <CheckBox
-            type="checkbox"
-            checked={isChecked}
-            onChange={checkAction}
-          />
-        </CheckBoxContainer>
-        <MediaIcon icon={faFolder} />
-        <Title>{folderName}</Title>
-      </FolderContainer>
-    </>
+    <FolderContainer
+      key={childernFolder.id}
+      state={isChecked}
+      onDoubleClick={handelDubleClick}
+      ref={folderRef}
+    >
+      <CheckBoxContainer>
+        <CheckBox type="checkbox" checked={isChecked} onChange={checkAction} />
+      </CheckBoxContainer>
+      <MediaIcon icon={faFolder} />
+      <Title>
+        {childernFolder.folderName?.length > 15
+          ? childernFolder.folderName.substring(0, 15) + "..."
+          : childernFolder.folderName}
+      </Title>
+    </FolderContainer>
   );
 }
 
@@ -45,13 +64,14 @@ const CheckBoxContainer = styled.div`
 const MediaIcon = styled(FontAwesomeIcon)`
   color: var(--mainIconColor);
   padding: 10px;
-  font-size: 20px;
+  font-size: 18px;
 `;
 
 const FolderContainer = styled.div`
+  cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   background-color: ${(props) =>
     props.state ? " var(--activeBgColor)" : "var(--mainDarkBgColor)"};
   border-radius: 8px;
@@ -85,7 +105,8 @@ const CheckBox = styled.input`
 `;
 
 const Title = styled.div`
-  font-weight: lighter;
+  font-weight: bold;
   color: var(--mainTextColor);
-  font-size: 16px;
+  font-size: 13px;
+  pointer-events: none;
 `;

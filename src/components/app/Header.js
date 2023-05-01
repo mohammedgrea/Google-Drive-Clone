@@ -13,7 +13,7 @@ export default function Header() {
   const [userInfoStatePanel, setUserInfoStatePanel] = useState(false);
   const avatarRef = useRef();
   function hideUserInfoPanel(e) {
-    if (!avatarRef.current.contains(e.target)) {
+    if (!avatarRef.current?.contains(e.target)) {
       setUserInfoStatePanel(false);
     }
   }
@@ -112,6 +112,7 @@ const SearchContainer = styled.div`
   }
   @media (max-width: 768px) {
     width: 100%;
+    height: 40px;
   }
 `;
 const SearchInput = styled.input`
@@ -122,13 +123,13 @@ const SearchInput = styled.input`
   border: none;
   outline: none;
   @media (max-width: 768px) {
-    font-size: 15px;
-    width: 90%;
+    font-size: 12px;
+    width: 95%;
   }
 `;
 const SearchIcon = styled(FontAwesomeIcon)`
   cursor: pointer;
-  padding: 13px;
+  padding: 10px;
   color: var(--mainIconColor);
   font-size: 18px;
   margin-right: 5px;
@@ -137,12 +138,12 @@ const SearchIcon = styled(FontAwesomeIcon)`
     background-color: var(--secondaryIconColor);
   }
   @media (max-width: 768px) {
-    font-size: 14px;
+    font-size: 12px;
   }
 `;
 const ClearIcon = styled(FontAwesomeIcon)`
   cursor: pointer;
-  padding: 13px;
+  padding: 10px;
   color: var(--mainIconColor);
   font-size: 18px;
   margin-right: 5px;
@@ -151,7 +152,7 @@ const ClearIcon = styled(FontAwesomeIcon)`
     background-color: var(--secondaryIconColor);
   }
   @media (max-width: 768px) {
-    font-size: 14px;
+    font-size: 12px;
   }
 `;
 const SearchOptionIcon = styled(FontAwesomeIcon)`

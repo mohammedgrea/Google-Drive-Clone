@@ -16,9 +16,11 @@ import { faDesktop } from "@fortawesome/free-solid-svg-icons";
 import SliderOption from "./SliderOption";
 import AddModel from "./AddModal";
 import { useState } from "react";
-import { useSideBarContext } from "../../context/SidebarContext";
+import { useDispatch, useSelector } from "react-redux";
+import { showSidebar } from "../../store/sidebaerSlide";
 export default function SideBar() {
-  const { isSidebarHided, showOrhideSidebar } = useSideBarContext();
+  const dispatch = useDispatch();
+  const isSidebarHided = useSelector((state) => state.sidebar.isSidebarHided);
   const [stateModal, setModalState] = useState(false);
   function hideModal() {
     setModalState(false);
@@ -30,7 +32,7 @@ export default function SideBar() {
         <PlusIcon icon={faPlus} />
         <span>new</span>
       </AddButton>
-      <ToggelButton onClick={showOrhideSidebar}>
+      <ToggelButton onClick={() => dispatch(showSidebar())}>
         <ToggelButtonIcon icon={isSidebarHided ? faGreaterThan : faLessThan} />
       </ToggelButton>
       <AddModel stateModal={stateModal} showModal={hideModal} />
@@ -49,10 +51,13 @@ export default function SideBar() {
 const SideBarContainer = styled.div`
   position: fixed;
   height: calc(100% - 60px);
-  width: 200px;
+  width: 220px;
   top: 60px;
+  left: 0;
+  padding-left: 20px;
   transform: ${(props) => (props.isSidebarHided ? "translateX(-200px)" : null)};
   background-color: var(--mainBgColor);
+
   transition: 0.1s cubic-bezier(0.17, 0.67, 0.83, 0.67);
   @media (max-width: 992px) {
     box-shadow: 1px 0px 5px -6px rgba(0, 0, 0, 0.75);
@@ -103,6 +108,7 @@ const ToggelButton = styled.button`
   border: none;
   outline: none;
   padding: 20px;
+  border-radius: 50%;
   &:hover {
     transform: scale(1.1);
   }

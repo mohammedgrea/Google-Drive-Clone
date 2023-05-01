@@ -6,16 +6,24 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../store/authSlice";
 
 export default function UserInfo({ showUserInfoPanel, hideUserInfoPanel }) {
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  const dispatch = useDispatch();
   const userInfoPanelRef = useRef();
   function hide(e) {
-    if (!userInfoPanelRef.current.contains(e.target) && showUserInfoPanel) {
+    if (!userInfoPanelRef.current?.contains(e.target) && showUserInfoPanel) {
       hideUserInfoPanel(e);
     }
   }
   useEffect(() => {
-    document.addEventListener("mousedown", hide);
+    document.addEventListener("mousedown", (e) => {
+      if (showUserInfoPanel) {
+        hide(e);
+      }
+    });
   });
   return (
     <UserInfoContainer
@@ -30,7 +38,7 @@ export default function UserInfo({ showUserInfoPanel, hideUserInfoPanel }) {
           </UserPicture>
           <EmailAndUserNameContainer>
             <UserName>Google Drive</UserName>
-            <Email>google.drive@gmail.com</Email>
+            <Email>{currentUser?.email}</Email>
           </EmailAndUserNameContainer>
         </AccountContainer>
         <ManagerAccount>Manage your Google Account</ManagerAccount>
@@ -40,7 +48,7 @@ export default function UserInfo({ showUserInfoPanel, hideUserInfoPanel }) {
           <span>Add another account</span>
         </AddAnAccount>
       </Container>
-      <SignOutButton>
+      <SignOutButton onClick={() => dispatch(logout())}>
         <SignOutIcon icon={faRightFromBracket} />
         <span>Sign out</span>
       </SignOutButton>
@@ -69,9 +77,13 @@ const UserInfoContainer = styled.div`
     font-size: 12px;
     color: var(--secondaryTextColor);
     padding: 5px;
+    pointer-events: none;
   }
   > hr {
     border: 1px solid var(--lightsecondaryBgColor);
+  }
+  @media (max-width: 768px) {
+    width: 320px;
   }
 `;
 const AccountContainer = styled.div`
@@ -101,6 +113,9 @@ const AvatarIcon = styled(FontAwesomeIcon)`
   cursor: pointer;
   font-size: 60px;
   color: green;
+  @media (max-width: 768px) {
+    font-size: 50px;
+  }
 `;
 
 const ManagerAccount = styled.button`
@@ -117,7 +132,7 @@ const ManagerAccount = styled.button`
 const AddAnAccount = styled.button`
   display: flex;
   cursor: pointer;
-  padding: 10px 20px;
+  padding: 15px 20px;
   width: 100%;
   font-size: 14px;
   border-radius: 0 0 8px 8px;
@@ -128,6 +143,9 @@ const AddAnAccount = styled.button`
   transition: var(--mainTransition);
   &:hover {
     background-color: var(--activeBgColor);
+  }
+  @media (max-width: 768px) {
+    padding: 10px 20px;
   }
 `;
 const AddAccountIcon = styled(FontAwesomeIcon)`
@@ -160,6 +178,9 @@ const SignOutButton = styled.button`
   &:hover {
     background-color: var(--activeBgColor);
   }
+  @media (max-width: 768px) {
+    padding: 10px 40px;
+  }
 `;
 
 const SignOutIcon = styled(FontAwesomeIcon)`
@@ -170,7 +191,11 @@ const SignOutIcon = styled(FontAwesomeIcon)`
 
 const TermsAndPrivacy = styled.div`
   padding: 20px;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  @media (max-width: 768px) {
+    padding: 10px 20px;
+  }
 `;
 
 const Terms = styled.button`
