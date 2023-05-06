@@ -10,23 +10,14 @@ This is a Google Drive clone built from scratch using React.js, React Router DOM
 ![Screen Dashboard](/public/images/image2.png)
 ![Screen View file](/public/images/image1.png)
 
-#### Table of Contents
-
-- **[Features](###Features)**
-- **[Technologies](#Technologies)**
-- **[Getting Started](#Technologies)**
-- **[Folder Structure](#Technologies)**
-- **[Contributing]("Technologies")**
-- **[License](#Technologies)**
-
 ### Features
 
-User authentication (sign in and sign up)
-Uploading files of different types (images, videos, PDFs)
-Deleting files
-Displaying files
-Creating folders
-Responsive design
+- User authentication (sign in and sign up)
+- Uploading files of different types (images, videos, PDFs)
+- Deleting files
+- Displaying files
+- Creating folders
+- Responsive design
 
 ### Technologies
 
