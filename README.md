@@ -5,17 +5,7 @@ This is a Google Drive clone built from scratch using React.js, React Router DOM
 <div class = "images">
 <img src="/public/images/phone-image2.png" alt="Screen View file"/>
 <img src="/public/images/phone-image1.png" alt="Screen View file"/>
-<img src="/public/images/phone-image3.png" alt="Screen View file"/>
 </div>
-<style>
-    .images{
-        background-color:lightgrey;
-        display:flex;
-        justify-content:center;
-        gap:20px;
-        padding:20px;
-    }
-</style>
 
 ![Screen Dashboard](/public/images/image2.png)
 ![Screen View file](/public/images/image1.png)
