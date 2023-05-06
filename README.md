@@ -57,7 +57,7 @@ Create a Firebase project and obtain the Firebase configuration.
 
 Create a **`.env`** file in the root directory and add your Firebase configuration as environment variables. Example:
 
-```javascript
+```plaintext
 REACT_APP_FIREBASE_API_KEY = your - api - key;
 REACT_APP_FIREBASE_AUTH_DOMAIN = your - auth - domain;
 REACT_APP_FIREBASE_PROJECT_ID = your - project - id;
