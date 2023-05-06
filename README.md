@@ -12,7 +12,7 @@ This is a Google Drive clone built from scratch using React.js, React Router DOM
 
 ### Features
 
-- User authentication (sign in and sign up)
+- User authentication (Sign in,Sign up , Sign out )
 - Uploading files of different types (images, videos, PDFs)
 - Deleting files
 - Displaying files
