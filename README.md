@@ -1,8 +1,24 @@
 # Google Drive Clone
 
+This is a Google Drive clone built from scratch using React.js, React Router DOM, and styled-components for styling. It utilizes Firebase as the backend for storing and managing files. With this application, you can upload various types of files such as images, videos, PDFs, etc., delete files, and organize them into folders. The design is fully responsive, adapting to different screen sizes, and you can also create folders to organize your files effectively. The application is provides a seamless user experience [LIVE DEMO](https://storage-e2543.firebaseapp.com/).
+
+<div class = "images">
+<img src="/public/images/phone-image2.png" alt="Screen View file"/>
+<img src="/public/images/phone-image1.png" alt="Screen View file"/>
+<img src="/public/images/phone-image3.png" alt="Screen View file"/>
+</div>
+<style>
+    .images{
+        background-color:lightgrey;
+        display:flex;
+        justify-content:center;
+        gap:20px;
+        padding:20px;
+    }
+</style>
+
 ![Screen Dashboard](/public/images/image2.png)
-![Screen Dashboard](/public/images/image1.png)
-This is a Google Drive clone built from scratch using React.js, React Router DOM, and styled-components for styling. It utilizes Firebase as the backend for storing and managing files. With this application, you can upload various types of files such as images, videos, PDFs, etc., delete files, and organize them into folders. The design is fully responsive, adapting to different screen sizes, and you can also create folders to organize your files effectively. The application is provides a seamless user experience.
+![Screen View file](/public/images/image1.png)
 
 #### Table of Contents
 
