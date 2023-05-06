@@ -23,7 +23,6 @@ const selectSlice = createSlice({
     },
     addfiles: (state, { payload }) => {
       if (state.files.length === 0) {
-        console.log(payload);
         state.files.push(payload);
       } else if (!state.files.find((file) => file.id === payload.id)) {
         state.files.push(payload);

@@ -25,7 +25,6 @@ export default function Signup() {
       )
     );
     if (passwordRef.current.value === ConfirmpasswordRef.current.value) {
-      console.log(passwordRef.current.value, ConfirmpasswordRef.current.value);
       dispatch(
         logup({
           email: emailRef.current.value,

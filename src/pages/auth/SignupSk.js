@@ -7,7 +7,7 @@ import { logup } from "../../store/authSlice";
 import { MoonLoader } from "react-spinners";
 export default function Signup() {
   const currentUser = useSelector((state) => state.auth.currentUser);
-  const [loading, setLoading] = useState(false);
+  const loading = useSelector((state) => state.auth.loading);
   const load = JSON.parse(localStorage.getItem("loading"));
   const dispatch = useDispatch();
   const emailRef = useRef();
@@ -21,7 +21,7 @@ export default function Signup() {
         password: passwordRef.current.value,
       })
     );
-    setLoading(true);
+    // setLoading(true);
   }
   useEffect(() => {
     if (loading) localStorage.setItem("loading", JSON.stringify("logged"));

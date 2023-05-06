@@ -6,17 +6,18 @@ import {
   signOut,
 } from "firebase/auth";
 
-const initialState = { currentUser: "" };
+const initialState = { currentUser: "", loading: false };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     login: (state, { payload }) => {
-      console.log(state);
+      state.loading = true;
       signInWithEmailAndPassword(auth, payload.email, payload.password).catch(
         (err) => {
           const error = err.message.split("/")[1].slice(0, -2);
+          localStorage.clear();
           if (
             error?.includes("already") ||
             error?.includes("user") ||
@@ -28,19 +29,18 @@ const authSlice = createSlice({
       );
     },
     logup: (state, { payload }) => {
-      createUserWithEmailAndPassword(
-        auth,
-        payload.email,
-        payload.password
-      ).catch((err) => {
-        const error = err.message.split("/")[1].slice(0, -2);
-        if (error?.includes("already") || error?.includes("user")) {
-          alert(error);
-        }
-      });
+      createUserWithEmailAndPassword(auth, payload.email, payload.password)
+        .then((state.loading = true))
+        .catch((err) => {
+          const error = err.message.split("/")[1].slice(0, -2);
+          if (error?.includes("already") || error?.includes("user")) {
+            alert(error);
+          }
+        });
     },
-    logout: () => {
+    logout: (state) => {
       signOut(auth);
+      state.loading = false;
       localStorage.clear();
     },
     setuser: (state, action) => {

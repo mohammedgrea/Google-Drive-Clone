@@ -1,12 +1,14 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/authSlice";
 import { Link, Navigate } from "react-router-dom";
 import styled from "styled-components/macro";
 import AuthContainer from "../../components/auth/AuthContainer";
-
+import { MoonLoader } from "react-spinners";
 export default function Signin() {
   const currentUser = useSelector((state) => state.auth.currentUser);
+  const loading = useSelector((state) => state.auth.loading);
+  const load = JSON.parse(localStorage.getItem("loading"));
   const [errors, setErros] = useState({});
   const dispatch = useDispatch();
   const emailRef = useRef();
@@ -29,33 +31,39 @@ export default function Signin() {
       })
     );
   }
-
+  useEffect(() => {
+    if (loading) localStorage.setItem("loading", JSON.stringify("logged"));
+  }, [loading]);
   return (
     <>
       <AuthContainer>
-        <SignContainer onSubmit={hundelSubmit}>
-          <DriveLogo>
-            <img src="/images/google-drive-logo.png" alt="google drive" />
-            <span>google drive</span>
-          </DriveLogo>
-          <InputContainer>
-            <Input type="emial" ref={emailRef} required />
-            {errors.email && <p>{errors.email}</p>}
-            <Label>adress email</Label>
-          </InputContainer>
-          <InputContainer>
-            <Input type="password" ref={passwordRef} required />
-            {errors.password && <p>{errors.password}</p>}
-            <Label>enter your password</Label>
-          </InputContainer>
-          <SubmitButton type="submit">Sign in</SubmitButton>
-          <DemoButton type="button" onClick={handelDemoMode}>
-            Try without sign in
-          </DemoButton>
-          <HaveAnAccount>
-            Don't have an account ? <Link to="/signup">sign up</Link>
-          </HaveAnAccount>
-        </SignContainer>
+        {loading || load === "logged" ? (
+          <MoonLoader color="#4688f4" />
+        ) : (
+          <SignContainer onSubmit={hundelSubmit}>
+            <DriveLogo>
+              <img src="/images/google-drive-logo.png" alt="google drive" />
+              <span>google drive</span>
+            </DriveLogo>
+            <InputContainer>
+              <Input type="emial" ref={emailRef} required />
+              {errors.email && <p>{errors.email}</p>}
+              <Label>adress email</Label>
+            </InputContainer>
+            <InputContainer>
+              <Input type="password" ref={passwordRef} required />
+              {errors.password && <p>{errors.password}</p>}
+              <Label>enter your password</Label>
+            </InputContainer>
+            <SubmitButton type="submit">Sign in</SubmitButton>
+            <DemoButton type="button" onClick={handelDemoMode}>
+              Try without sign in
+            </DemoButton>
+            <HaveAnAccount>
+              Don't have an account ? <Link to="/signup">sign up</Link>
+            </HaveAnAccount>
+          </SignContainer>
+        )}
         {currentUser && <Navigate to="/" />}
       </AuthContainer>
     </>

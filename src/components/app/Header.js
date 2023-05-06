@@ -8,6 +8,7 @@ import {
   faXRay,
 } from "@fortawesome/free-solid-svg-icons";
 import UserInfo from "./UserInfo";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   const [userInfoStatePanel, setUserInfoStatePanel] = useState(false);
@@ -20,10 +21,12 @@ export default function Header() {
   return (
     <HeaderContainer>
       <LeftHeader>
-        <DriveLogo>
-          <img src="/images/google-drive-logo.png" alt="google drive" />
-          <span>Drive</span>
-        </DriveLogo>
+        <Link to="/">
+          <DriveLogo>
+            <img src="/images/google-drive-logo.png" alt="google drive" />
+            <span>Drive</span>
+          </DriveLogo>
+        </Link>
       </LeftHeader>
       <MiddleHeader>
         <SearchContainer>

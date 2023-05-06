@@ -3,7 +3,6 @@ import Header from "../../components/app/Header";
 import Navigation from "../../components/app/Navigation";
 import Sidebar from "../../components/app/Sidebar";
 import styled from "styled-components/macro";
-
 export default function Dashboard() {
   return (
     <MainContaienr>
