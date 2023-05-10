@@ -31,7 +31,7 @@ Styled Components: A library for styling React components using CSS-in-JS
 
 To get started with the Google Drive clone, follow these steps:
 
-1. Clone the repository: git clone https://github.com/your-username/google-drive-clone.git
+1. Clone the repository
 
 2. Navigate to the project directory: cd google-drive-clone
 
@@ -44,7 +44,7 @@ To get started with the Google Drive clone, follow these steps:
 - Create a .env file in the root directory and add your Firebase configuration as environment variables. Example:Getting Started
   To get started with the Google Drive clone, follow these steps:
 
-Clone the repository: **git clone https://github.com/your-username/google-drive-clone.git**
+Clone the repository
 
 Navigate to the project directory: **`cd google-drive-clone`**
 
